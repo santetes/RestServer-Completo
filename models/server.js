@@ -17,7 +17,7 @@ class Server {
         //CORS
         this.app.use(cors());
 
-        //Lectura y Parseo del body
+        //Lectura y Parseo del body cuando viene información en formato JSON en una petición Post put o delete
         this.app.use(express.json());
 
         //Directorio Públic
