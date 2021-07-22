@@ -1,16 +1,28 @@
 const express = require('express');
 const cors = require('cors');
 require('colors');
+const mongoose = require('mongoose');
+
+const { dbConexion } = require('../DataBase/config');
 
 class Server {
     constructor() {
         this.app = express();
         this.port = process.env.PORT;
+        this.pathUsuarios = '/api/usuarios';
+
+        //Conectar Base de Datos
+        this.conectaBBDD();
 
         //Middlewares
         this.middlewares();
+
         //Rutas de mi aplicacion
         this.routes();
+    }
+
+    async conectaBBDD() {
+        await dbConexion();
     }
 
     middlewares() {
@@ -27,7 +39,7 @@ class Server {
 
     routes() {
         //Con este midleware le decimos que todo lo que entre por "/api/usuarios", utilice la constante router de user.js donde hemos configuradao cada tipo de conexión y sus funciones
-        this.app.use('/api/usuarios', require('../routers/user'));
+        this.app.use(this.pathUsuarios, require('../routers/user'));
     }
 
     listen() {

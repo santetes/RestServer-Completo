@@ -6,6 +6,7 @@
 //Estas consultas se pueden convinar entre si. Por ejemplo, en una petición PUT podemos indicarle mediante params el ID y además incluirle un body
 
 const { response, request } = require('express');
+const Usuario = require('../models/usuario');
 
 const usuariosGet = (req = request, res = response) => {
     const { nombre, id } = req.query; //Capturamos los valoes que viene después d la petición Localhost:8080/api/usuariarios?nombre=xxx&id=xxxx
@@ -25,12 +26,15 @@ const usuariosPut = (req = request, res = response) => {
     });
 };
 
-const usuariosPost = (req, res = response) => {
-    const { nombre, edad } = req.body;
+const usuariosPost = async (req, res = response) => {
+    const body = req.body;
+    const usuario = new Usuario(body);
+
+    await usuario.save();
+
     res.json({
         msg: 'post API  - Desde Controlador',
-        nombre,
-        edad,
+        usuario,
     });
 };
 
