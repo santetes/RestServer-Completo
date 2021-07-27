@@ -21,7 +21,7 @@ const usuariosSchema = Schema({
     role: {
         type: String,
         require: true,
-        enum: ['ADMIN_ROLE', 'USER_ROLE'],
+        enum: ['ADMIN_ROLE', 'USER_ROLE', 'VENTAS_ROLE'],
     },
     estado: {
         type: Boolean,
@@ -33,5 +33,11 @@ const usuariosSchema = Schema({
     },
 });
 
-//el nombre Usuario se va a utilizar para instanciar nuevos registros de usuario (documents) la colección se va a llamar como este mismo nombre puesto aquí pero añadiendo la terminación -s --> usuarios
+//Este método sobreescrito sirve para quitar propiedades del objeto original usuario. Por ejemplo, la versión y la contraseña no la queremos en el objeto devuelto.
+usuariosSchema.methods.toJSON = function () {
+    const { __v, password, ...usuario } = this.toObject(); //Con este truco se puede eliminar claves y valores de un objeto
+    return usuario;
+};
+
+//el nombre Usuario se va a utilizar para instanciar nuevos registros de usuario (documents) la colección se va a llamar como este mismo nombre puesto aquí pero añadiendo la terminación -s --> Usuarios
 module.exports = model('Usuario', usuariosSchema);

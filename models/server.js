@@ -1,8 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 require('colors');
-const mongoose = require('mongoose');
 
+//Método externo para la conexión con la base de datos mediante Mongoose
 const { dbConexion } = require('../DataBase/config');
 
 class Server {
