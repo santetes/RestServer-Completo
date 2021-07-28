@@ -42,6 +42,7 @@ class Server {
         this.app.use(this.pathUsuarios, require('../routers/user'));
     }
 
+    //este método no se ejecuta directamente del constructor, sino que es llamada desde la instancia creada de server en app.js
     listen() {
         this.app.listen(this.port, () => {
             console.log(`A la escucha en el puerto ${this.port}`.magenta);
