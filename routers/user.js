@@ -1,9 +1,15 @@
 //Importamos el método Router de express
 const { Router } = require('express');
 const { check } = require('express-validator');
+
 const { usuariosGet, usuariosPut, usuariosPost, usuariosDelete } = require('../controllers/user');
 const { esRoleValido, existeEmail, existeUsuarioPorId } = require('../helpers/db-validator');
-const { validarCampos } = require('../middlewares/validar-campos');
+
+//Todos estos middlewares se pueden optimizar y centralizarlos en una única importación
+// const { validarCampos } = require('../middlewares/validar-campos');
+// const { esAdministrador, tieneRole } = require('../middlewares/validar-role');
+// const { validarToken } = require('../middlewares/validar-Token');
+const { validarCampos, esAdministrador, tieneRole, validarToken } = require('../middlewares');
 
 //Si ejecutamos el método Router() nos devuelve un objeto router que
 //es donde podemos configurar que acción realizar para cada petición.
@@ -42,6 +48,9 @@ router.post(
 router.delete(
     '/:id',
     [
+        validarToken,
+        //esAdministrador,
+        tieneRole('ADMIN_ROLE'),
         check('id', 'No es un ID válido').isMongoId(),
         check('id').custom(existeUsuarioPorId),
         validarCampos,

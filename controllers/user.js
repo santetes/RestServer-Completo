@@ -66,13 +66,16 @@ const usuariosPost = async (req, res = response) => {
 
 const usuariosDelete = async (req = request, res = response) => {
     const { id } = req.params;
+
     //Si queremos borrarlo físicamente
     //const usuario = await Usuario.findByIdAndDelete(id);
     //La opción más adecuada es modificar su estado a false para que no sea listado pero siga manteniendose en la BBDD
     const usuario = await Usuario.findByIdAndUpdate(id, { estado: false }, { new: true });
+    const usuarioAutentificado = req.usuario;
 
     res.json({
         usuario,
+        usuarioAutentificado,
     });
 };
 

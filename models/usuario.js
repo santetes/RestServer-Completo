@@ -33,9 +33,10 @@ const usuariosSchema = Schema({
     },
 });
 
-//Este método sobreescrito sirve para quitar propiedades del objeto original usuario. Por ejemplo, la versión y la contraseña no la queremos en el objeto devuelto.
+//Este método sobreescrito sirve para quitar propiedades del objeto original usuario. Por ejemplo, la versión y la contraseña no la queremos en el objeto devuelto al convertirlo a JSON
 usuariosSchema.methods.toJSON = function () {
-    const { __v, password, ...usuario } = this.toObject(); //Con este truco se puede eliminar claves y valores de un objeto
+    const { __v, password, _id, ...usuario } = this.toObject(); //Con este truco se puede eliminar claves y valores de un objeto
+    usuario.uid = _id;
     return usuario;
 };
 

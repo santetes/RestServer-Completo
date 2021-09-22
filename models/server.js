@@ -10,6 +10,7 @@ class Server {
         this.app = express();
         this.port = process.env.PORT;
         this.pathUsuarios = '/api/usuarios';
+        this.pathAuth = '/api/auth';
 
         //Conectar Base de Datos
         this.conectaBBDD();
@@ -38,7 +39,8 @@ class Server {
     }
 
     routes() {
-        //Con este midleware le decimos que todo lo que entre por "/api/usuarios", utilice la constante router de user.js donde hemos configuradao cada tipo de conexión y sus funciones
+        //Con este midleware le decimos que todo lo que entre por "/api/usuarios" o "api/auth", utilice la constante router de user.js donde hemos configuradao cada tipo de conexión y sus funciones
+        this.app.use(this.pathAuth, require('../routers/auth'));
         this.app.use(this.pathUsuarios, require('../routers/user'));
     }
 
