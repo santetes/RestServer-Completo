@@ -2,7 +2,12 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 
-const { usuariosGet, usuariosPut, usuariosPost, usuariosDelete } = require('../controllers/user');
+const {
+    usuariosGet,
+    usuariosPut,
+    usuariosPost,
+    usuariosDelete,
+} = require('../routers.controllers/user');
 const { esRoleValido, existeEmail, existeUsuarioPorId } = require('../helpers/db-validator');
 
 //Todos estos middlewares se pueden optimizar y centralizarlos en una única importación
