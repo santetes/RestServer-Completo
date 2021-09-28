@@ -25,7 +25,13 @@
             data-shape="rectangular"
             data-logo_alignment="left"
         ></div>
+
+        <div>
+            <button id="google_singout">singOut</button>
+        </div>
+
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
         <script>
             function handleCredentialResponse(response) {
                 const options = {
@@ -36,11 +42,29 @@
                         'Content-Type': 'application/json;charset=UTF-8',
                     },
                     data: {
-                        id_token: response.credential,
+                        google_id_token: response.credential,
                     },
                 };
-                axios(options).then((res) => console.log(res.data));
+                axios(options)
+                    .then((res) => {
+                        console.log(res.data);
+                        localStorage.setItem('correo', res.data.usuario.correo);
+                        location.reload();
+                    })
+
+                    .catch((error) => console.log(error.response));
             }
+
+            const button = document.getElementById('google_singout');
+            button.onclick = () => {
+                console.log(google.accounts.id);
+                google.accounts.id.disableAutoSelect();
+
+                google.accounts.id.revoke(localStorage.getItem('correo'), (done) => {
+                    localStorage.clear();
+                    location.reload();
+                });
+            };
         </script>
         <script src="https://accounts.google.com/gsi/client" async defer></script>
     </body>
