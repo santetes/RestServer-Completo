@@ -35,7 +35,8 @@
         <script>
             function handleCredentialResponse(response) {
                 const options = {
-                    url: 'http://localhost:8080/api/auth/google',
+                    //url: 'http://localhost:8080/api/auth/google',//url petición modo desarrroyo
+                    url: 'https://rest-server-santetes.herokuapp.com/api/auth/google', //url petición modo producción
                     method: 'POST',
                     headers: {
                         Accept: 'application/json',
