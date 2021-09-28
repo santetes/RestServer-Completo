@@ -50,7 +50,6 @@
                     .then((res) => {
                         console.log(res.data);
                         localStorage.setItem('correo', res.data.usuario.correo);
-                        location.reload();
                     })
 
                     .catch((error) => console.log(error.response));
