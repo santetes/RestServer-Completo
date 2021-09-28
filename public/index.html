@@ -34,9 +34,12 @@
 
         <script>
             function handleCredentialResponse(response) {
+                let url = window.location.hostname.includes('localhost')
+                    ? 'http://localhost:8080/api/auth/google'
+                    : 'https://rest-server-santetes.herokuapp.com/api/auth/google';
+
                 const options = {
-                    //url: 'http://localhost:8080/api/auth/google',//url petición modo desarrroyo
-                    url: 'https://rest-server-santetes.herokuapp.com/api/auth/google', //url petición modo producción
+                    url,
                     method: 'POST',
                     headers: {
                         Accept: 'application/json',
