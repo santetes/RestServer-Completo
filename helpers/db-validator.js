@@ -38,15 +38,12 @@ const existeProducto = async (id = '') => {
     }
 };
 
-// const esCategoriaValida = async (nombre_min = '') => {
-//     const nombre = nombre_min.toUpperCase();
-//     const existeCategoria = await Categoria.findOne({ nombre });
-//     if (!existeCategoria) {
-//         throw new Error(
-//             ` La categoria ${nombre} no se encuentra registrada en nuestra base de datos`
-//         );
-//     }
-// };
+const esCategoriaValida = async (id = '') => {
+    const existe = await Categoria.findById(id);
+    if (!existe) {
+        throw new Error('No existe un producto con la Id indicada');
+    }
+};
 
 module.exports = {
     esRoleValido,
@@ -54,5 +51,5 @@ module.exports = {
     existeUsuarioPorId,
     existeCategoria,
     existeProducto,
-    //esCategoriaValida,
+    esCategoriaValida,
 };

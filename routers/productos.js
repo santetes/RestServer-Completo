@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { existeProducto } = require('../helpers/db-validator');
+const { existeProducto, esCategoriaValida } = require('../helpers/db-validator');
 
 const { validarToken, tieneRole, validarCategoria } = require('../middlewares');
 const { validarCampos } = require('../middlewares/validar-campos');
@@ -31,16 +31,19 @@ router.get(
 );
 
 //Crear Producto
-//TODO: crear check por middleware para almacenar en req el id de la categoria
+
 router.post(
     '/',
     [
         validarToken,
         check('nombre', 'el nombre no puede estar vacío').not().isEmpty(),
         check('categoria', 'la categoria no puede esta vacía').not().isEmpty(),
-        //check('categoria').custom(esCategoriaValida),
+        check(
+            'categoria',
+            'La Id  de la categoria no es un identificador válido MongoDb'
+        ).isMongoId(),
+        check('categoria').custom(esCategoriaValida),
         validarCampos,
-        validarCategoria, // valido categoria después de validar campos para asegurarme que la categoria no vien vacía
     ],
     crearProducto
 );
@@ -50,13 +53,11 @@ router.put(
     '/:id',
     [
         validarToken,
-        check('nombre', 'el nombre no puede estar vacío').not().isEmpty(),
         check('id', 'La Id no es un identificador válido MongoDb').isMongoId(),
+        check('categoria', 'La categoria no es un Id válido MongoDb').isMongoId(),
         check('id').custom(existeProducto),
-        check('categoria', 'la categoria no puede esta vacía').not().isEmpty(),
-        //check('categoria').custom(esCategoriaValida),
+        check('categoria').custom(esCategoriaValida),
         validarCampos,
-        validarCategoria, // valido categoria después de validar campos para asegurarme que la categoria no vien vacía
     ],
     actualizarProducto
 );

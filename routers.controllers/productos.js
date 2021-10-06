@@ -47,9 +47,8 @@ const obtenerProducto_individual = async (req = request, res = response) => {
 //TODO: modificar categoria nombre por categoria Id para almacenar en la base de datos
 
 const crearProducto = async (req = request, res = response) => {
-    const { nombre, precio, descripcion, disponible } = req.body;
+    const { nombre, precio, descripcion, disponible, categoria } = req.body; //Puedo o extraer lo que quiero guardar en BBDD o extraer lo que no quiero guardar y pasarle al nuevo producto el ...resto
     const usuario = req.usuario.id;
-    const categoria = req.categoria.id;
 
     let producto = await Producto.findOne({ nombre });
     if (producto) {
@@ -70,9 +69,8 @@ const crearProducto = async (req = request, res = response) => {
 //Actualizar producto
 const actualizarProducto = async (req = request, res = response) => {
     const { id } = req.params;
-    const { estado, usuario, categoria, ...data } = req.body; //extraigo todo lo que viene del body. si viniera usuario, tambien lo saco para poder luego actualizar el usuario que realiza la operación
+    const { estado, usuario, ...data } = req.body; //aqui hago lo contrario que en el caso anterior, extraigo lo que no quiero que me envíen y paso a la actualización el ...resto
     data.usuario = req.usuario._id;
-    data.categoria = req.categoria.id;
 
     const producto = await Producto.findByIdAndUpdate(id, data, { new: true })
         .populate('usuario', 'nombre')
