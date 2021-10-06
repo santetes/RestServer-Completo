@@ -34,6 +34,7 @@
 
         <script>
             function handleCredentialResponse(response) {
+                //revisa si la petición está hecha desde localhost en modo desarroyo o desde heroku en modo producción
                 let url = window.location.hostname.includes('localhost')
                     ? 'http://localhost:8080/api/auth/google'
                     : 'https://rest-server-santetes.herokuapp.com/api/auth/google';

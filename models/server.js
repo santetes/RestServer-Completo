@@ -9,8 +9,13 @@ class Server {
     constructor() {
         this.app = express();
         this.port = process.env.PORT;
-        this.pathUsuarios = '/api/usuarios';
-        this.pathAuth = '/api/auth';
+
+        this.path = {
+            auth: '/api/auth',
+            categorias: '/api/categorias',
+            usuarios: '/api/usuarios',
+            producto: '/api/productos',
+        };
 
         //Conectar Base de Datos
         this.conectaBBDD();
@@ -40,8 +45,10 @@ class Server {
 
     routes() {
         //Con este midleware le decimos que todo lo que entre por "/api/usuarios" o "api/auth", utilice la constante router de user.js donde hemos configuradao cada tipo de conexión y sus funciones
-        this.app.use(this.pathAuth, require('../routers/auth'));
-        this.app.use(this.pathUsuarios, require('../routers/user'));
+        this.app.use(this.path.auth, require('../routers/auth'));
+        this.app.use(this.path.usuarios, require('../routers/user'));
+        this.app.use(this.path.categorias, require('../routers/categorias'));
+        this.app.use(this.path.producto, require('../routers/productos'));
     }
 
     //este método no se ejecuta directamente del constructor, sino que es llamada desde la instancia creada de server en app.js

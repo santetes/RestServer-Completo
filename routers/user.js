@@ -54,7 +54,6 @@ router.delete(
     '/:id',
     [
         validarToken,
-        //esAdministrador,
         tieneRole('ADMIN_ROLE'),
         check('id', 'No es un ID válido').isMongoId(),
         check('id').custom(existeUsuarioPorId),
