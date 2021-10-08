@@ -15,6 +15,7 @@ class Server {
             categorias: '/api/categorias',
             usuarios: '/api/usuarios',
             producto: '/api/productos',
+            buscar: '/api/buscar',
         };
 
         //Conectar Base de Datos
@@ -49,6 +50,7 @@ class Server {
         this.app.use(this.path.usuarios, require('../routers/user'));
         this.app.use(this.path.categorias, require('../routers/categorias'));
         this.app.use(this.path.producto, require('../routers/productos'));
+        this.app.use(this.path.buscar, require('../routers/buscar'));
     }
 
     //este método no se ejecuta directamente del constructor, sino que es llamada desde la instancia creada de server en app.js
