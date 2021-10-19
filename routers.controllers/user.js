@@ -39,7 +39,6 @@ const usuariosPut = async (req = request, res = response) => {
     const { id } = req.params; //Capturamos el valor id que viene despúes de / en la petición put
     const { _id, correo, password, google, ...resto } = req.body; //se saca esas variables si vienieran en el body para que no se pueda hackear bbdd
 
-    //TODO Validar contra base de datos
     if (password) {
         //Encriptar contraseña
         const salt = bcryptjs.genSaltSync();

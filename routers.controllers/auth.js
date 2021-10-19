@@ -49,7 +49,7 @@ const googleSingIn = async (req, res = response) => {
             const data = {
                 nombre,
                 correo,
-                password: ':P',
+                password: ':P', //No importa el password ya que se va a utilizar el sistema de identificación de google
                 img,
                 google: true,
             };
